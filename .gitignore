@@ -1,6 +1,12 @@
 # Token file
 token.txt
 
+# Venv Stuff
+Include/
+Lib/
+Scripts/
+pyenv.cfg
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
