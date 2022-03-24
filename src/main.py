@@ -1,5 +1,5 @@
 import berserk
-from game import Game
+from engine import Engine
 
 BASE_URL = "https://lichess.org"
 session = berserk.TokenSession(open("../token.txt", "r").read())
@@ -15,11 +15,10 @@ def listenForEvents():
                     client.bots.decline_challenge(event['challenge']['id'])
             elif event['type'] == 'gameStart':
                 print("Before task")
-                game = Game(client, event)
-                game.start()
+                engine = Engine(client, event)
+                engine.start()
             elif event['type'] == 'gameFinish':
                 pass
 
 if __name__ == '__main__':
     listenForEvents()
-
