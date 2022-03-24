@@ -18,7 +18,8 @@ class Game(threading.Thread):
         my_move = None
         if self.turn:
             my_move = str(random.choice(list(self.board.legal_moves)))
-            self.make_move(my_move)
+            self.board.push_san(my_move)
+            self.client.bots.make_move(self.game_id, my_move)
         for event in self.stream:
             print(event)
             if event['type'] == 'gameState':
@@ -27,15 +28,12 @@ class Game(threading.Thread):
                     if event_move != my_move:
                         self.board.push_san(event['moves'].split(" ")[-1])
                         my_move = str(random.choice(list(self.board.legal_moves)))
-                        self.make_move(my_move)
+                        self.board.push_san(my_move)
+                        self.client.bots.make_move(self.game_id, my_move)
                 elif event['status'] in finished_states:
                     return
             elif event['type'] == 'chatLine':
                 self.handle_chat_line(event)
-
-    def make_move(self, move):
-        self.board.push_san(move)
-        self.client.bots.make_move(self.game_id, move)
 
     def handle_chat_line(self, chat_line):
         pass
