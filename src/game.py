@@ -1,6 +1,6 @@
+import chess
 import threading
 import random
-from logic import Engine
 
 finished_states = ['aborted', 'mate', 'resign', 'stalemate', 'timeout', 'draw', 'outoftime', 'unknownFinish']
 
@@ -13,7 +13,6 @@ class Game(threading.Thread):
         self.current_state = next(self.stream)
         self.board = chess.Board()
         self.turn = event['game']['isMyTurn']
-        self.engine = Engine()
 
     def run(self):
         my_move = None
